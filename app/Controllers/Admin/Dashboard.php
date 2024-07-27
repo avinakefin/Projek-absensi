@@ -25,8 +25,6 @@ class Dashboard extends BaseController
 
    protected PetugasModel $petugasModel;
 
-   protected string $namaSekolah;
-
    public function __construct()
    {
       $this->siswaModel = new SiswaModel();
@@ -35,7 +33,6 @@ class Dashboard extends BaseController
       $this->presensiSiswaModel = new PresensiSiswaModel();
       $this->presensiGuruModel = new PresensiGuruModel();
       $this->petugasModel = new PetugasModel();
-      $this->namaSekolah = ConfigAbsensiSekolah::SCHOOL_NAME;
    }
 
    public function index()
@@ -46,7 +43,7 @@ class Dashboard extends BaseController
       $siswaKehadiranArray = [];
       $guruKehadiranArray = [];
 
-      for ($i = 7; $i >= 0; $i--) {
+      for ($i = 6; $i >= 0; $i--) {
          $date = $now->subDays($i)->toDateString();
          if ($i == 0) {
             $formattedDate = "Hari ini";
@@ -101,8 +98,6 @@ class Dashboard extends BaseController
          ],
 
          'petugas' => $this->petugasModel->getAllPetugas(),
-
-         'namaSekolah' => $this->namaSekolah,
       ];
 
       return view('admin/dashboard', $data);
