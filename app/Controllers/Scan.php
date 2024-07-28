@@ -164,7 +164,7 @@ class Scan extends BaseController
                 // Ambil nomor HP dari tabel guru
                 $guru = $this->guruModel->find($idGuru);
                 if ($guru && isset($guru['no_hp'])) {
-                    $this->sendWhatsAppNotification($result['nama_guru'], $guru['no_hp'], $date $time);
+                    $this->sendWhatsAppNotification($result['nama_guru'], $guru['no_hp'], $date, $time);
                 }
 
                 return view('scan/scan-result', $data);
