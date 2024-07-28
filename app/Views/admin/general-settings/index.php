@@ -10,7 +10,6 @@
                         <h4 class="card-title"><b>Pengaturan</b></h4>
                     </div>
                     <div class="card-body mx-5 my-3">
-
                         <form action="<?= base_url('admin/general-settings/update'); ?>" method="post" enctype="multipart/form-data">
                             <?= csrf_field() ?>
                             <div class="form-group mt-4">
@@ -43,7 +42,7 @@
                                     <div class="form-group">
                                         <label for="logo">Logo</label>
                                         <div style="margin-bottom: 10px; border: 1px solid #eee; padding: 10px; width: auto;">
-                                            <img id="logo" src="<?= getLogo(); ?>" alt="logo" style="max-width: 250px; max-height: 250px;">
+                                            <img id="logo" src="<?= getLogo(); ?>" alt="logo" style="max-width: 50px; max-height: 50px;">
                                         </div>
                                         <div class="display-block">
                                             <button type="button" onclick="$('#logo-upload').trigger('click');" class="btn btn-primary btn-sm btn-file-upload">
@@ -56,10 +55,22 @@
                                     </div>
                                 </div>
                             </div>
+                            
+                            <div class="form-check">
+                                <input type="checkbox" class="form-check-input" id="show_logo" name="show_logo" <?= $generalSettings->show_logo ? 'checked' : ''; ?>>
+                                <label class="form-check-label" for="show_logo">Tampilkan Logo Sekolah</label>
+                            </div>
+
                             <button type="submit" class="btn btn-primary btn-block">Simpan</button>
                         </form>
 
                         <hr>
+
+                        <!-- Tombol Import Guru -->
+                        <div class="form-group mt-4">
+                            <a href="<?= base_url('admin/import-guru'); ?>" class="btn btn-primary btn-block">Import Guru</a>
+                        </div>
+
                     </div>
                 </div>
             </div>

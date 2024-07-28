@@ -65,7 +65,6 @@ $routes->group('admin', function (RouteCollection $routes) {
    // admin hapus data siswa
    $routes->delete('siswa/delete/(:any)', 'Admin\DataSiswa::delete/$1');
 
-
    // admin lihat data guru
    $routes->get('guru', 'Admin\DataGuru::index');
    $routes->post('guru', 'Admin\DataGuru::ambilDataGuru');
@@ -78,6 +77,9 @@ $routes->group('admin', function (RouteCollection $routes) {
    // admin hapus data guru
    $routes->delete('guru/delete/(:any)', 'Admin\DataGuru::delete/$1');
 
+   // Route baru untuk import guru
+    $routes->get('import-guru', 'Admin\ImportGuru::index');
+    $routes->post('import-guru/import', 'Admin\ImportGuru::import');
 
    // admin lihat data absen siswa
    $routes->get('absen-siswa', 'Admin\DataAbsenSiswa::index');
@@ -125,7 +127,8 @@ $routes->group('admin', function (RouteCollection $routes) {
    $routes->group('general-settings', ['namespace' => 'App\Controllers\Admin'], function ($routes) {
       $routes->get('/', 'GeneralSettings::index');
       $routes->post('update', 'GeneralSettings::generalSettingsPost');
-  });
+      $routes->post('admin/general-settings/update', 'Admin\GeneralSettings::update');
+   });
 });
 
 
