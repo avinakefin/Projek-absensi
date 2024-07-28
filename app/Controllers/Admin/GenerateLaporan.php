@@ -13,7 +13,6 @@ use App\Models\KelasModel;
 use App\Models\PresensiGuruModel;
 use App\Models\SiswaModel;
 use App\Models\PresensiSiswaModel;
-use Config\AbsensiSekolah as ConfigAbsensiSekolah;
 
 class GenerateLaporan extends BaseController
 {
@@ -25,9 +24,6 @@ class GenerateLaporan extends BaseController
    protected PresensiSiswaModel $presensiSiswaModel;
    protected PresensiGuruModel $presensiGuruModel;
 
-   protected string $namaSekolah;
-   protected string $tahunAjaran;
-
    public function __construct()
    {
       $this->siswaModel = new SiswaModel();
@@ -37,9 +33,6 @@ class GenerateLaporan extends BaseController
 
       $this->presensiSiswaModel = new PresensiSiswaModel();
       $this->presensiGuruModel = new PresensiGuruModel();
-
-      $this->namaSekolah = ConfigAbsensiSekolah::SCHOOL_NAME;
-      $this->tahunAjaran = ConfigAbsensiSekolah::SCHOOL_YEAR;
    }
 
    public function index()
@@ -98,7 +91,7 @@ class GenerateLaporan extends BaseController
 
       foreach ($period as $value) {
          // kecualikan hari sabtu dan minggu
-         if (!($value->format('D') == 'Sun')) {
+         if (!($value->format('D') == 'Sat' || $value->format('D') == 'Sun')) {
             $lewat = Time::parse($value->format('Y-m-d'))->isAfter(Time::today());
 
             $absenByTanggal = $this->presensiSiswaModel
@@ -130,8 +123,6 @@ class GenerateLaporan extends BaseController
          ],
          'kelas' => $kelas,
          'grup' => "kelas " . $kelas['kelas'] . " " . $kelas['jurusan'],
-         'namaSekolah' => $this->namaSekolah,
-         'tahunAjaran' => $this->tahunAjaran
       ];
 
       if ($type == 'doc') {
@@ -176,7 +167,7 @@ class GenerateLaporan extends BaseController
 
       foreach ($period as $value) {
          // kecualikan hari sabtu dan minggu
-         if (!($value->format('D') == 'Sun')) {
+         if (!($value->format('D') == 'Sat' || $value->format('D') == 'Sun')) {
             $lewat = Time::parse($value->format('Y-m-d'))->isAfter(Time::today());
 
             $absenByTanggal = $this->presensiGuruModel
@@ -207,8 +198,6 @@ class GenerateLaporan extends BaseController
             'perempuan' => count($guru) - $laki
          ],
          'grup' => 'guru',
-         'namaSekolah' => $this->namaSekolah,
-         'tahunAjaran' => $this->tahunAjaran
       ];
 
       if ($type == 'doc') {
